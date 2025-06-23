@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Bot Wrapper</title>
-  </head>
-  <body>
-    <iframe src="https://learnervii.github.io/test2Servicenow/" id="botFrame" width="100%" height="100%"></iframe>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ServiceNow URL Receiver</title>
+</head>
+<body>
+  <h2>Waiting for pageUrl from wrapper...</h2>
 
-    <script>
-      const iframe = document.getElementById("botFrame");
-
-      iframe.addEventListener("load", () => {
-        iframe.contentWindow.postMessage(
-          {
-            type: "pageInfo",
-            pageUrl: window.location.href
-          },
-          "*"
-        );
-      });
-    </script>
-  </body>
+  <script>
+    // Listen for the postMessage from wrapper.html
+    window.addEventListener("message", (event) => {
+      if (event.data?.type === "pageInfo" && event.data.pageUrl) {
+        const pageUrl = event.data.pageUrl;
+        console.log("✅ Received pageUrl:", pageUrl);
+        alert("Received ServiceNow page URL:\n" + pageUrl);
+      }
+    });
+  </script>
+</body>
 </html>
