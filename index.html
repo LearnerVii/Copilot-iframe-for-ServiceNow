@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>ServiceNow URL Receiver</title>
-</head>
-<body>
-  <h2>Waiting for pageUrl from wrapper...</h2>
-
-  <script>
-    // Listen for the postMessage from wrapper.html
-    window.addEventListener("message", (event) => {
-      if (event.data?.type === "pageInfo" && event.data.pageUrl) {
-        const pageUrl = event.data.pageUrl;
-        console.log("✅ Received pageUrl:", pageUrl);
-        alert("Received ServiceNow page URL:\n" + pageUrl);
+<html>
+  <head>
+    <title>Bot Wrapper</title>
+    <script>
+      // Utility to extract a query parameter by name
+      function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
       }
-    });
-  </script>
-</body>
+
+      // On page load, alert the pageUrl
+      window.addEventListener("DOMContentLoaded", () => {
+        const serviceNowUrl = getQueryParam("pageUrl");
+        if (serviceNowUrl) {
+          alert("ServiceNow Page URL: " + serviceNowUrl);
+          console.log("ServiceNow Page URL:", serviceNowUrl);
+        } else {
+          alert("No pageUrl found in the URL.");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <iframe src="https://learnervii.github.io/test2Servicenow/" id="botFrame" width="100%" height="100%"></iframe>
+  </body>
 </html>
